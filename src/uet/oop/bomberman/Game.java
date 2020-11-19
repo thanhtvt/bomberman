@@ -22,9 +22,17 @@ public class Game extends Canvas {
 	public static int SCALE = 3;
 	
 	public static final String TITLE = "BombermanGame";
-	
+
+	/**
+	 * Số lượng bom có thể đặt.
+	 */
 	private static final int BOMBRATE = 1;
+
+	/**
+	 * Bán kính bom nổ.
+	 */
 	private static final int BOMBRADIUS = 1;
+
 	private static final double BOMBERSPEED = 1.0;
 	
 	public static final int TIME = 200;
@@ -111,7 +119,7 @@ public class Game extends Canvas {
 	public void start() {
 		_running = true;
 		
-		long  lastTime = System.nanoTime();
+		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
 		double delta = 0;

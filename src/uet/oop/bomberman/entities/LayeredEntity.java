@@ -18,8 +18,8 @@ public class LayeredEntity extends Entity {
 		_y = y;
 		
 		for (int i = 0; i < entities.length; i++) {
-			_entities.add(entities[i]); 
-			
+			_entities.add(entities[i]);
+
 			if(i > 1) {
 				if(entities[i] instanceof DestroyableTile)
 					((DestroyableTile)entities[i]).addBelowSprite(entities[i-1].getSprite());

@@ -32,8 +32,8 @@ public class Board implements IRender {
 	protected List<Bomb> _bombs = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
 	
-	private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
-	
+	private int _screenToShow = -1; //1:endgame, 2:change level, 3:paused
+
 	private int _time = Game.TIME;
 	private int _points = Game.POINTS;
 	
@@ -73,7 +73,10 @@ public class Board implements IRender {
 		
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
-				_entities[x + y * _levelLoader.getWidth()].render(screen);
+				try {
+					_entities[x + y * _levelLoader.getWidth()].render(screen);
+				}
+				catch(ArrayIndexOutOfBoundsException e) {}
 			}
 		}
 		
@@ -187,7 +190,10 @@ public class Board implements IRender {
 		
 		return null;
 	}
-	
+
+	/**
+	 * Trả về character (không phải a) tại tọa độ x, y.
+	 */
 	public Character getCharacterAtExcluding(int x, int y, Character a) {
 		Iterator<Character> itr = _characters.iterator();
 		
