@@ -44,7 +44,7 @@ public class LayeredEntity extends Entity {
 	}
 	
 	private void clearRemoved() {
-		Entity top  = getTopEntity();
+		Entity top = getTopEntity();
 		
 		if(top.isRemoved())  {
 			_entities.removeLast();
@@ -58,7 +58,7 @@ public class LayeredEntity extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: lấy entity trên cùng ra để xử lý va chạm
-		return false;
+		return getTopEntity().collide(e);
 	}
 
 }

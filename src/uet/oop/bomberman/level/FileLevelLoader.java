@@ -39,7 +39,6 @@ public class FileLevelLoader extends LevelLoader {
 		// TODO: cập nhật các giá trị đọc được vào _width, _height, _level, _map
 		String path = "res/levels/Level" + level + ".txt";
 		try {
-
 			File mapFile = new File(path);
 			Scanner sc = new Scanner(mapFile);
 			String[] info = sc.nextLine().split(" ");
@@ -146,15 +145,6 @@ public class FileLevelLoader extends LevelLoader {
 				}
 			}
 		}
-		// thêm Item kèm Brick che phủ ở trên
-		int xI = 1, yI = 2;
-		_board.addEntity(xI + yI * _width,
-				new LayeredEntity(xI, yI,
-					new Grass(xI ,yI, Sprite.grass),
-					new SpeedItem(xI, yI, Sprite.powerup_flames),
-					new Brick(xI, yI, Sprite.brick)
-				)
-		);
 	}
 
 }

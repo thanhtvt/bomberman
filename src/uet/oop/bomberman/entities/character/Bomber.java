@@ -3,9 +3,13 @@ package uet.oop.bomberman.entities.character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.tile.Wall;
+import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
@@ -100,7 +104,6 @@ public class Bomber extends Character {
                 Game.addBombRate(1);
             }
         }
-
     }
 
     @Override
@@ -135,20 +138,41 @@ public class Bomber extends Character {
         if(_input.down) {
             y = _y + 1 * bomberSpeed;
         }
-        if(x != _x && y != _y) {
+        if(x != _x || y != _y) {
             _moving = true;
             move(x, y);
         }
+        else {
+            _moving = false;
+        }
+
     }
 
     @Override
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        Entity entityObstacle = _board.getEntity(Coordinates.pixelToTile(x), Coordinates.pixelToTile(y), this);
-        if(!collide(entityObstacle)) {
-            return true;
+        // Kiểm tra cả 4 góc để xử lý va chạm được triệt để
+        // Can move có vấn đề, FIX HERE!!!
+        int spriteSize = _sprite.getSize();
+
+        Entity entityBottomLeft  = _board.getEntity(Coordinates.pixelToTile(x), Coordinates.pixelToTile(y - 1), this);
+        Entity entityBottomRight = _board.getEntity(Coordinates.pixelToTile(x + spriteSize - 1), Coordinates.pixelToTile(y - 1), this);
+        Entity entityTopLeft     = _board.getEntity(Coordinates.pixelToTile(x), Coordinates.pixelToTile(y - spriteSize), this);
+        Entity entityTopRight    = _board.getEntity(Coordinates.pixelToTile(x + spriteSize - 1), Coordinates.pixelToTile(y - spriteSize), this);
+
+        // DEBUG
+//         System.out.println("====================");
+//         System.out.println(x + " - " + Coordinates.pixelToTile(x) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomLeft);
+//         System.out.println((x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomRight);
+//         System.out.println(x + " - " + Coordinates.pixelToTile(x) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopLeft);
+//         System.out.println((x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopRight);
+        // END DEBUG
+
+//        System.out.println(collide(entityBottomLeft) + " " + collide(entityBottomRight) + " " + collide(entityTopLeft) + " " + collide(entityTopRight));
+        if(collide(entityBottomRight) || collide(entityBottomLeft) || collide(entityTopLeft) || collide(entityTopRight)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -178,9 +202,15 @@ public class Bomber extends Character {
     public boolean collide(Entity e) {
         // TODO: xử lý va chạm với Flame
         // TODO: xử lý va chạm với Enemy
-        if(e instanceof Flame || e instanceof Enemy) {
+        if(e instanceof Flame || e instanceof Enemy || e instanceof FlameSegment) {
             this.kill();
             return true;
+        }
+        else if(e instanceof Wall || (e instanceof LayeredEntity && ((LayeredEntity) e).getTopEntity() instanceof Brick)) {
+            return true;
+        }
+        else if(e instanceof Bomb) {
+            return e.collide(this);
         }
         return false;
     }
