@@ -17,8 +17,11 @@ public class FlameItem extends Item {
 		// TODO: xử lý Bomber ăn Item
 		System.out.println(e);
 		if(e instanceof Bomber) {
-			Game.addBombRadius(1);
-			remove();
+			if(timeOfCollision % 2 == 0) {
+				Game.addBombRadius(1);
+				remove();
+			}
+			timeOfCollision++;
 			return true;
 		}
 		else if(e instanceof Flame) {

@@ -181,8 +181,8 @@ public class Game extends Canvas {
 		bomberSpeed += i;
 	}
 	
-	public static void addBombRadius() {
-		bombRadius ++ ;
+	public static void addBombRadius(int i) {
+		bombRadius += i;
 	}
 	
 	public static void addBombRate(int i) {

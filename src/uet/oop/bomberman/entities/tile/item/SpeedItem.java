@@ -16,8 +16,11 @@ public class SpeedItem extends Item {
 	public boolean collide(Entity e) {
 		// TODO: xử lý Bomber ăn Item
 		if(e instanceof Bomber) {
-			Game.addBomberSpeed(0.5);
-			remove();
+			if(timeOfCollision % 2 == 0) {
+				Game.addBomberSpeed(0.5);
+				remove();
+			}
+			timeOfCollision++;
 			return true;
 		}
 		else if(e instanceof Flame) {
