@@ -68,7 +68,7 @@ public class Bomber extends Character {
 
     public void calculateXOffset() {
         int xScroll = Screen.calculateXOffset(_board, this);
-        Screen.setOffset(xScroll, 0);
+        //Screen.setOffset(xScroll, 0);
     }
 
     /**
@@ -209,6 +209,7 @@ public class Bomber extends Character {
         else if(e instanceof Wall || (e instanceof LayeredEntity && ((LayeredEntity) e).getTopEntity() instanceof Brick)) {
             return true;
         }
+        // TODO: xử lý va chạm bom
         else if(e instanceof Bomb) {
             return e.collide(this);
         }

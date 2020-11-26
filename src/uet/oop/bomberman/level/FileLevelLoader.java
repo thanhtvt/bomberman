@@ -95,7 +95,7 @@ public class FileLevelLoader extends LevelLoader {
 						// Thêm Bomber
 						int xBomber = 1, yBomber = 1;
 						_board.addCharacter( new Bomber(Coordinates.tileToPixel(xBomber), Coordinates.tileToPixel(yBomber) + Game.TILES_SIZE, _board) );
-						Screen.setOffset(0, 0);
+						//Screen.setOffset(0, 0);
 						_board.addEntity(xBomber + yBomber * _width, new Grass(xBomber, yBomber, Sprite.grass));
 						break;
 					case '1':
