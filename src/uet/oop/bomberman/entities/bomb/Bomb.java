@@ -105,25 +105,23 @@ public class Bomb extends AnimatedEntitiy {
 	@Override
 	public boolean collide(Entity e) {
         // TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
-        // TODO: xử lý va chạm với Flame của Bomb khác
-
-		if(e instanceof Bomber) {
-//			_allowedToPassThru = true;
-			int diffX = e.getXTile() - (int)_x;
-			int diffY = e.getYTile() - (int)_y;
-
-			// differences to see if Bomber has moved out of the bomb, tested values
-			if(diffX == 0 && diffY == 0) {
+		if (e instanceof Bomber && _allowedToPassThru) {
+			int bomberSize = e.getSprite().getSize();
+			boolean bottomLeftCheck = false;
+			boolean topRightCheck = false;
+			if(Coordinates.pixelToTile(e.getX()) != (int)_x || Coordinates.pixelToTile(e.getY() - 1) != (int)_y) {
+				bottomLeftCheck = true;
+			}
+			if(Coordinates.pixelToTile(e.getX() + bomberSize - 1) != (int)_x || Coordinates.pixelToTile(e.getY() - bomberSize) != (int)_y) {
+				topRightCheck = true;
+			}
+			if (bottomLeftCheck && topRightCheck) {
 				_allowedToPassThru = false;
 			}
-			// DEBUG
-//			System.out.println("=================");
-//			System.out.println(e.getX() + " - " + Coordinates.tileToPixel(_x) + ", " + e.getY() + " - " + Coordinates.tileToPixel(_y));
-//			System.out.println(diffX + " " + diffY + ": " + _allowedToPassThru);
-			// END DEBUG
-
 			return _allowedToPassThru;
 		}
+
+		// TODO: xử lý va chạm với Flame của Bomb khác
 		if(e instanceof Flame) {
 			if(!_exploded) {
 				explode();

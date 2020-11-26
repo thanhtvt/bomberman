@@ -3,13 +3,8 @@ package uet.oop.bomberman.entities.character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.bomb.Flame;
-import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.entities.tile.Wall;
-import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
@@ -56,19 +51,12 @@ public class Bomber extends Character {
 
     @Override
     public void render(Screen screen) {
-        calculateXOffset();
-
         if (_alive)
             chooseSprite();
         else
             _sprite = Sprite.player_dead1;
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
-    }
-
-    public void calculateXOffset() {
-        int xScroll = Screen.calculateXOffset(_board, this);
-        Screen.setOffset(xScroll, 0);
     }
 
     /**
@@ -152,7 +140,6 @@ public class Bomber extends Character {
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
         // Kiểm tra cả 4 góc để xử lý va chạm được triệt để
-        // Can move có vấn đề, FIX HERE!!!
         int spriteSize = _sprite.getSize();
 
         Entity entityBottomLeft  = _board.getEntity(Coordinates.pixelToTile(x), Coordinates.pixelToTile(y - 1), this);
@@ -161,18 +148,20 @@ public class Bomber extends Character {
         Entity entityTopRight    = _board.getEntity(Coordinates.pixelToTile(x + spriteSize - 1), Coordinates.pixelToTile(y - spriteSize), this);
 
         // DEBUG
-//         System.out.println("====================");
-//         System.out.println(x + " - " + Coordinates.pixelToTile(x) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomLeft);
-//         System.out.println((x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomRight);
-//         System.out.println(x + " - " + Coordinates.pixelToTile(x) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopLeft);
-//         System.out.println((x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopRight);
+//         System.out.println("=================");
+//         System.out.println("Bottom Left: " + x + " - " + Coordinates.pixelToTile(x) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomLeft + ": " + collide(entityBottomLeft));
+//         System.out.println("Bottom Right: " + (x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomRight + ": " + collide(entityBottomRight));
+//         System.out.println("Top Left: " + x + " - " + Coordinates.pixelToTile(x) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopLeft + ": " + collide(entityTopLeft));
+//         System.out.println("Top Right: " + (x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopRight + ": " + collide(entityTopRight));
         // END DEBUG
 
-//        System.out.println(collide(entityBottomLeft) + " " + collide(entityBottomRight) + " " + collide(entityTopLeft) + " " + collide(entityTopRight));
-        if(collide(entityBottomRight) || collide(entityBottomLeft) || collide(entityTopLeft) || collide(entityTopRight)) {
-            return false;
+        // Because collision of Grass always return true
+        // Wall, Brick, Portal, Bomb return false
+        // So when one of collision checker returns false, Bomber cannot move
+        if(collide(entityBottomRight) && collide(entityBottomLeft) && collide(entityTopLeft) && collide(entityTopRight)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -202,17 +191,11 @@ public class Bomber extends Character {
     public boolean collide(Entity e) {
         // TODO: xử lý va chạm với Flame
         // TODO: xử lý va chạm với Enemy
-        if(e instanceof Flame || e instanceof Enemy || e instanceof FlameSegment) {
+        if (e instanceof Enemy) {
             this.kill();
             return true;
         }
-        else if(e instanceof Wall || (e instanceof LayeredEntity && ((LayeredEntity) e).getTopEntity() instanceof Brick)) {
-            return true;
-        }
-        else if(e instanceof Bomb) {
-            return e.collide(this);
-        }
-        return false;
+        return e.collide(this);
     }
 
     private void chooseSprite() {
