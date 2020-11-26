@@ -16,7 +16,9 @@ import java.awt.image.DataBufferInt;
 public class Game extends Canvas {
 
 	public static final int TILES_SIZE = 16,
-							WIDTH = TILES_SIZE * (31 ),
+
+							WIDTH = TILES_SIZE * 31,
+
 							HEIGHT = 13 * TILES_SIZE;
 
 	public static int SCALE = 3;
@@ -179,8 +181,8 @@ public class Game extends Canvas {
 		bomberSpeed += i;
 	}
 	
-	public static void addBombRadius(int i) {
-		bombRadius += i;
+	public static void addBombRadius() {
+		bombRadius ++ ;
 	}
 	
 	public static void addBombRate(int i) {
