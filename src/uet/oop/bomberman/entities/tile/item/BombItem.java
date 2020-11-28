@@ -15,7 +15,6 @@ public class BombItem extends Item {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý Bomber ăn Item
-		System.out.println(e);
 		if(e instanceof Bomber) {
 			if(timeOfCollision % 2 == 0) {
 				Game.addBombRate(1);

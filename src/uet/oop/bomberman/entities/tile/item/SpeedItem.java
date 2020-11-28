@@ -17,7 +17,7 @@ public class SpeedItem extends Item {
 		// TODO: xử lý Bomber ăn Item
 		if(e instanceof Bomber) {
 			if(timeOfCollision % 2 == 0) {
-				Game.addBomberSpeed(0.5);
+				Game.addBomberSpeed(0.3);
 				remove();
 			}
 			timeOfCollision++;
