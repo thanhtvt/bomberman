@@ -269,7 +269,7 @@ public class Board implements IRender {
 			
 			g.setFont(new Font("Arial", Font.PLAIN, m.getSize()));
 			g.setColor(m.getColor());
-			g.drawString(m.getMessage(), (int)m.getX() - Screen.xOffset  * Game.SCALE, (int)m.getY());
+			g.drawString(m.getMessage(), (int)m.getX() - (int)(Screen.xOffset  * Game.SCALE), (int)m.getY());
 		}
 	}
 	

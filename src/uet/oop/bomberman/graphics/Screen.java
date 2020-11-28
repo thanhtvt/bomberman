@@ -85,22 +85,22 @@ public class Screen {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("GAME OVER", getRealWidth(), getRealHeight(), g);
 		
-		font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
+		font = new Font("Arial", Font.PLAIN, (int)(10 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.yellow);
-		drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
+		drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (int)((Game.TILES_SIZE * 2) * Game.SCALE), g);
 	}
 
 	public void drawChangeLevel(Graphics g, int level) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
@@ -108,7 +108,7 @@ public class Screen {
 	}
 	
 	public void drawPaused(Graphics g) {
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("PAUSED", getRealWidth(), getRealHeight(), g);
@@ -131,10 +131,10 @@ public class Screen {
 	}
 	
 	public int getRealWidth() {
-		return _width * Game.SCALE;
+		return (int)(_width * Game.SCALE);
 	}
 	
 	public int getRealHeight() {
-		return _height * Game.SCALE;
+		return (int)(_height * Game.SCALE);
 	}
 }

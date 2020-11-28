@@ -14,7 +14,7 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel(Frame frame) {
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE));
+		setPreferredSize(new Dimension((int)(Game.WIDTH * Game.SCALE), (int)(Game.HEIGHT * Game.SCALE)));
 
 		_game = new Game(frame);
 
