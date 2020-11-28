@@ -112,7 +112,11 @@ public class Flame extends Entity {
 	}
 
 	@Override
-	public void update() {}
+	public void update() {
+		for (int i = 0; i < _flameSegments.length; i++) {
+			_flameSegments[i].update();
+		}
+	}
 	
 	@Override
 	public void render(Screen screen) {

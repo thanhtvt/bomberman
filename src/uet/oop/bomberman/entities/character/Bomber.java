@@ -53,8 +53,15 @@ public class Bomber extends Character {
     public void render(Screen screen) {
         if (_alive)
             chooseSprite();
-        else
-            _sprite = Sprite.player_dead1;
+        else {
+            if(_timeAfter > 0) {
+                _sprite = Sprite.player_dead1;
+            }
+            else {
+                _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 10);
+            }
+        }
+
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
     }
@@ -133,7 +140,8 @@ public class Bomber extends Character {
         else {
             _moving = false;
         }
-
+        // Check this again!!!
+        movementRounding();
     }
 
     @Override
@@ -224,6 +232,33 @@ public class Bomber extends Character {
                     _sprite = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, _animate, 20);
                 }
                 break;
+        }
+    }
+
+    /**
+     * Làm tròn các tham số x và y khi di chuyển để tránh kẹt ô
+     */
+    private void movementRounding() {
+        if (!_moving) {
+            int tileX = Coordinates.pixelToTile(_x);
+            // Dịch Bomber sang phải
+            if (Coordinates.tileToPixel(tileX + 1) - _x < 2.5) {
+                _x = Coordinates.tileToPixel(tileX + 1);
+            }
+            // Dịch Bomber sang trái
+            if (_x - Coordinates.tileToPixel(tileX)  < 2.5) {
+                _x = Coordinates.tileToPixel(tileX);
+            }
+
+            int tileY = Coordinates.pixelToTile(_y);
+            // Dịch Bomber xuống dưới
+            if (Coordinates.tileToPixel(tileY + 1)  - _y < 2.5) {
+                _y = Coordinates.tileToPixel(tileY + 1);
+            }
+            // Dịch Bomber lên trên
+            if (_y - Coordinates.tileToPixel(tileY) < 2.5) {
+                _y = Coordinates.tileToPixel(tileY);
+            }
         }
     }
 }
