@@ -215,9 +215,6 @@ public class Bomber extends Character {
             this.kill();
             return true;
         }
-        if (e instanceof Bomber) {
-            return true;
-        }
         return e.collide(this);
     }
 
