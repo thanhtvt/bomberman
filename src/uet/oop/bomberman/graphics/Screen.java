@@ -84,8 +84,13 @@ public class Screen {
 		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
-		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
-		
+
+		String title = "LEVEL " + level;
+		if(level == 0) {
+			title = "MULTIPLAYER";
+		}
+
+		drawCenteredString(title, getRealWidth(), getRealHeight(), g);
 	}
 	
 	public void drawPaused(Graphics g) {
