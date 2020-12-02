@@ -49,6 +49,9 @@ public class FlameSegment extends AnimatedEntitiy {
 		if(e instanceof Character) {
 			((Character) e).kill();
 		}
+		if(e instanceof Flame) {
+			return true;
+		}
 		return false;
 	}
 

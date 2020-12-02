@@ -1,9 +1,7 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.character.Bomber;
 
 import java.awt.*;
 
@@ -62,23 +60,6 @@ public class Screen {
 					_pixels[xa + ya * _width] = below.getPixel(x + y * below.getSize());
 			}
 		}
-	}
-
-	
-	public static int calculateXOffset(Board board, Bomber bomber) {
-		if(bomber == null) return 0;
-		int temp = xOffset;
-		
-		double BomberX = bomber.getX() / 16;
-		double complement = 0.5;
-		int firstBreakpoint = board.getWidth() / 4;
-		int lastBreakpoint = board.getWidth() - firstBreakpoint;
-		
-		if( BomberX > firstBreakpoint + complement && BomberX < lastBreakpoint - complement) {
-			temp = (int)bomber.getX()  - (Game.WIDTH / 2);
-		}
-		
-		return temp;
 	}
 	
 	public void drawEndGame(Graphics g, int points) {
