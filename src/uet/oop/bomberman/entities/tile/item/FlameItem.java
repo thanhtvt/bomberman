@@ -18,6 +18,7 @@ public class FlameItem extends Item {
 		if(e instanceof Bomber) {
 			if(timeOfCollision % 2 == 0) {
 				Game.addBombRadius(1);
+				playSoundEffect();
 				remove();
 			}
 			timeOfCollision++;

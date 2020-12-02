@@ -18,6 +18,7 @@ public class SpeedItem extends Item {
 		if(e instanceof Bomber) {
 			if(timeOfCollision % 2 == 0) {
 				Game.addBomberSpeed(0.3);
+				playSoundEffect();
 				remove();
 			}
 			timeOfCollision++;

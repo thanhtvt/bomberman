@@ -12,6 +12,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
+import uet.oop.bomberman.sounds.SoundEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class Board implements IRender {
 	public List<Character> _characters = new ArrayList<>();
 	protected List<Bomb> _bombs = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
+	private static SoundEffect backgroundMusic = new SoundEffect(SoundEffect.BACKGROUND_THEME);
 	
 	private int _screenToShow = -1; //1:endgame, 2:change level, 3:paused
 
@@ -97,6 +99,7 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
+		backgroundMusic.loop();
 		
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
@@ -117,6 +120,7 @@ public class Board implements IRender {
 		_screenToShow = 1;
 		_game.resetScreenDelay();
 		_game.pause();
+		backgroundMusic.stop();
 	}
 	
 	public boolean detectNoEnemies() {
@@ -330,6 +334,10 @@ public class Board implements IRender {
 		return _game;
 	}
 
+	public SoundEffect getSoundEffect() {
+		return backgroundMusic;
+	}
+
 	public int getShow() {
 		return _screenToShow;
 	}
@@ -349,13 +357,4 @@ public class Board implements IRender {
 	public void addPoints(int points) {
 		this._points += points;
 	}
-	
-	public int getWidth() {
-		return _levelLoader.getWidth();
-	}
-
-	public int getHeight() {
-		return _levelLoader.getHeight();
-	}
-	
 }

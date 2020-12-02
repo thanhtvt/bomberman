@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.character.enemy.ai.AI;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.sounds.SoundEffect;
 
 import java.awt.*;
 
@@ -112,7 +113,7 @@ public abstract class Enemy extends Character {
 	public boolean canMove(double x, double y) {
 		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
 		double xr = _x, yr = _y - 16; //subtract y to get more accurate results
-		double speed=16;
+		double speed = 16;
 		if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; }
 		if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
 		if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
@@ -130,11 +131,10 @@ public abstract class Enemy extends Character {
 	public boolean collide(Entity e) {
 		// TODO: xử lý va chạm với Flame
 		// TODO: xử lý va chạm với Bomber
-		if(e instanceof Flame)
-		{
+		if(e instanceof Flame) {
 			kill();
 		}
-		if(e instanceof Bomber){
+		if(e instanceof Bomber) {
 			((Bomber)e).kill();
 		}
 		return true;
@@ -144,6 +144,9 @@ public abstract class Enemy extends Character {
 	public void kill() {
 		if(!_alive) return;
 		_alive = false;
+
+		SoundEffect enemyDead = new SoundEffect(SoundEffect.ENEMY_DEAD);
+		enemyDead.play();
 		
 		_board.addPoints(_points);
 

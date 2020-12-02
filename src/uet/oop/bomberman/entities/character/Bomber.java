@@ -9,6 +9,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.sounds.SoundEffect;
 
 import java.util.Iterator;
 import java.util.List;
@@ -86,6 +87,10 @@ public class Bomber extends Character {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
         Bomb bomb = new Bomb(x, y, _board);
         _board.addBomb(bomb);
+
+        // Play sound effect
+        SoundEffect placeBombSound = new SoundEffect(SoundEffect.PLACE_BOMB);
+        placeBombSound.play();
     }
 
     private void clearBombs() {
@@ -105,6 +110,10 @@ public class Bomber extends Character {
     public void kill() {
         if (!_alive) return;
         _alive = false;
+
+        // Play sound effect
+        SoundEffect playerDead = new SoundEffect(SoundEffect.PLAYER_DEAD);
+        playerDead.play();
     }
 
     @Override
@@ -156,16 +165,16 @@ public class Bomber extends Character {
         Entity entityTopRight    = _board.getEntity(Coordinates.pixelToTile(x + spriteSize - 1), Coordinates.pixelToTile(y - spriteSize), this);
 
         // DEBUG
-//         System.out.println("=================");
 //         System.out.println("Bottom Left: " + x + " - " + Coordinates.pixelToTile(x) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomLeft + ": " + collide(entityBottomLeft));
 //         System.out.println("Bottom Right: " + (x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - 1) + " - " + Coordinates.pixelToTile(y - 1) + ": " + entityBottomRight + ": " + collide(entityBottomRight));
 //         System.out.println("Top Left: " + x + " - " + Coordinates.pixelToTile(x) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopLeft + ": " + collide(entityTopLeft));
 //         System.out.println("Top Right: " + (x + spriteSize - 1) + " - " + Coordinates.pixelToTile(x + spriteSize - 1) + ", " + (y - spriteSize) + " - " + Coordinates.pixelToTile(y - spriteSize) + ": " + entityTopRight + ": " + collide(entityTopRight));
+//         System.out.println("=================");
         // END DEBUG
 
-        // Because collision of Grass always return true
-        // Wall, Brick, Portal, Bomb return false
-        // So when one of collision checker returns false, Bomber cannot move
+        // Because collision of Grass, Portal always return true
+        // Wall, Brick, Bomb return false
+        // So when one of the collision checker returns false, Bomber cannot move
         if(collide(entityBottomRight) && collide(entityBottomLeft) && collide(entityTopLeft) && collide(entityTopRight)) {
             return true;
         }
@@ -242,21 +251,21 @@ public class Bomber extends Character {
         if (!_moving) {
             int tileX = Coordinates.pixelToTile(_x);
             // Dịch Bomber sang phải
-            if (Coordinates.tileToPixel(tileX + 1) - _x < 2.5) {
+            if (Coordinates.tileToPixel(tileX + 1) - _x < 4) {
                 _x = Coordinates.tileToPixel(tileX + 1);
             }
             // Dịch Bomber sang trái
-            if (_x - Coordinates.tileToPixel(tileX)  < 2.5) {
+            if (_x - Coordinates.tileToPixel(tileX) < 4) {
                 _x = Coordinates.tileToPixel(tileX);
             }
 
             int tileY = Coordinates.pixelToTile(_y);
             // Dịch Bomber xuống dưới
-            if (Coordinates.tileToPixel(tileY + 1)  - _y < 2.5) {
+            if (Coordinates.tileToPixel(tileY + 1) - _y < 4) {
                 _y = Coordinates.tileToPixel(tileY + 1);
             }
             // Dịch Bomber lên trên
-            if (_y - Coordinates.tileToPixel(tileY) < 2.5) {
+            if (_y - Coordinates.tileToPixel(tileY) < 4) {
                 _y = Coordinates.tileToPixel(tileY);
             }
         }
