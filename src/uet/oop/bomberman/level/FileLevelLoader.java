@@ -14,6 +14,7 @@ import uet.oop.bomberman.entities.tile.item.BombItem;
 import uet.oop.bomberman.entities.tile.item.FlameItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
 import uet.oop.bomberman.exceptions.LoadLevelException;
+import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -94,6 +95,7 @@ public class FileLevelLoader extends LevelLoader {
 						// Thêm Bomber
 						int xBomber = 1, yBomber = 1;
 						_board.addCharacter( new Bomber(Coordinates.tileToPixel(xBomber), Coordinates.tileToPixel(yBomber) + Game.TILES_SIZE, _board) );
+						//Screen.setOffset(0, 0);
 						_board.addEntity(xBomber + yBomber * _width, new Grass(xBomber, yBomber, Sprite.grass));
 						break;
 					case '1':
@@ -117,7 +119,7 @@ public class FileLevelLoader extends LevelLoader {
 						);
 						break;
 					case 'f':
-						// Thêm Flame Item kèm Brick che phủ lên
+						// Thêm Bomb Item kèm Brick che phủ lên
 						_board.addEntity(j + i * _width,
 								new LayeredEntity(j, i,
 										new Grass(j, i, Sprite.grass),
@@ -127,11 +129,11 @@ public class FileLevelLoader extends LevelLoader {
 						);
 						break;
 					case 's':
-						// Thêm Speed Item kèm Brick che phủ lên
+						// Thêm Bomb Item kèm Brick che phủ lên
 						_board.addEntity(j + i * _width,
 								new LayeredEntity(j, i,
 										new Grass(j, i, Sprite.grass),
-										new SpeedItem(j, i, Sprite.powerup_speed),
+										new BombItem(j, i, Sprite.powerup_speed),
 										new Brick(j, i, Sprite.brick)
 								)
 						);

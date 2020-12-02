@@ -22,7 +22,7 @@ public class Game extends Canvas {
 
 							HEIGHT = 13 * TILES_SIZE;
 
-	public static double SCALE = 2.5;
+	public static double SCALE = 2;
 	
 	public static final String TITLE = "BombermanGame";
 
