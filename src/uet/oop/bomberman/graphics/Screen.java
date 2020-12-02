@@ -2,6 +2,8 @@ package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.level.LevelLoader;
 
 import java.awt.*;
 
@@ -74,7 +76,11 @@ public class Screen {
 		font = new Font("Arial", Font.PLAIN, (int)(10 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.yellow);
-		drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (int)((Game.TILES_SIZE * 2) * Game.SCALE), g);
+		String subtitle = "POINTS: " + points;
+		if(LevelLoader._level == 0) {
+			subtitle = "PLAYER WINS";
+		}
+		drawCenteredString(subtitle, getRealWidth(), getRealHeight() + (int)((Game.TILES_SIZE * 2) * Game.SCALE), g);
 	}
 
 	public void drawChangeLevel(Graphics g, int level) {
@@ -86,7 +92,10 @@ public class Screen {
 		g.setColor(Color.white);
 
 		String title = "LEVEL " + level;
-		if(level == 0) {
+		if(level == -1) {
+			title = "CHOOSE MODE";
+		}
+		else if(level == 0) {
 			title = "MULTIPLAYER";
 		}
 

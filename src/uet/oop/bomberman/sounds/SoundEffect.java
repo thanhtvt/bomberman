@@ -15,7 +15,6 @@ public class SoundEffect {
     public static final String STAGE_COMPLETE = "stage_complete";
     public static final String STAGE_START = "stage_start";
 
-    private static boolean _muted = false;
     private Clip clip;
 
     public SoundEffect(String filename) {
@@ -30,27 +29,15 @@ public class SoundEffect {
     }
 
     public void play() {
-        if(!_muted) {
-            clip.setFramePosition(0);
-            clip.start();
-        }
+        clip.setFramePosition(0);
+        clip.start();
     }
 
     public void loop() {
-        if(!_muted) {
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void stop() {
         clip.stop();
-    }
-
-    public static void setMute(boolean muted) {
-        _muted = muted;
-    }
-
-    public static boolean isMuted() {
-        return _muted;
     }
 }

@@ -33,6 +33,7 @@ public class Board implements IRender {
 	protected List<Bomb> _bombs = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
 	private static SoundEffect backgroundMusic = new SoundEffect(SoundEffect.BACKGROUND_THEME);
+	private static SoundEffect multiMusic = new SoundEffect(SoundEffect.MULTIPLAYER);
 	
 	private int _screenToShow = -1; //1:endgame, 2:change level, 3:paused
 
@@ -44,7 +45,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(-1); //start in level 1
+		loadLevel(-1); //start in choosing mode phase
 	}
 	
 	@Override
@@ -99,8 +100,13 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
-		backgroundMusic.loop();
-		
+		if(level != 0) {
+			backgroundMusic.loop();
+		}
+		else {
+			multiMusic.loop();
+		}
+
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
@@ -121,6 +127,7 @@ public class Board implements IRender {
 		_game.resetScreenDelay();
 		_game.pause();
 		backgroundMusic.stop();
+		multiMusic.stop();
 	}
 	
 	public boolean detectNoEnemies() {

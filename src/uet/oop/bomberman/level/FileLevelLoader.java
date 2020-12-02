@@ -17,7 +17,6 @@ import uet.oop.bomberman.entities.tile.item.BombItem;
 import uet.oop.bomberman.entities.tile.item.FlameItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
 import uet.oop.bomberman.exceptions.LoadLevelException;
-import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -91,6 +90,15 @@ public class FileLevelLoader extends LevelLoader {
 										new Grass(j ,i, Sprite.grass),
 										new Portal(j, i, Sprite.portal, _board),
 										new Brick(j, i, Sprite.brick)
+								)
+						);
+						break;
+					case 'z':
+						// Thêm Portal nhưng không có Brick che phủ
+						_board.addEntity(j + i * _width,
+								new LayeredEntity(j, i,
+										new Grass(j, i, Sprite.grass),
+										new Portal(j, i, Sprite.portal, _board)
 								)
 						);
 						break;

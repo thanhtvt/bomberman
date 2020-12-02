@@ -13,7 +13,7 @@ public class Portal extends Tile {
 		super(x, y, sprite);
 		_board = board;
 	}
-	
+
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý khi Bomber đi vào
@@ -21,11 +21,23 @@ public class Portal extends Tile {
 			_board.getSoundEffect().stop();
 			SoundEffect stageComplete = new SoundEffect(SoundEffect.STAGE_COMPLETE);
 			stageComplete.play();
-			_board.nextLevel();
-			if(e.getX() == 16 && e.getY() == 128)  _board.nextLevel();
-			System.out.println(e.getY());
+			System.out.println(getX() + " " + getY());
+
+			chooseLevel();
+
 			return true;
 		}
 		return true;
+	}
+
+	private void chooseLevel() {
+		if(this.getX() == 2 && this.getY() == 7) {
+			// Play adventure mode
+			_board.loadLevel(1);
+		}
+		else {
+			// Play multiplayer mode
+			_board.nextLevel();
+		}
 	}
 }
