@@ -6,7 +6,9 @@ import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.BlueBomber;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.Ghost;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
+import uet.oop.bomberman.entities.character.enemy.Pontan;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.Wall;
@@ -28,7 +30,7 @@ public class FileLevelLoader extends LevelLoader {
 	 * Ma trận chứa thông tin bản đồ, mỗi phần tử lưu giá trị kí tự đọc được
 	 * từ ma trận bản đồ trong tệp cấu hình
 	 */
-	private static char[][] _map;
+	public static char[][] _map;
 	
 	public FileLevelLoader(Board board, int level) throws LoadLevelException {
 		super(board, level);
@@ -112,6 +114,16 @@ public class FileLevelLoader extends LevelLoader {
 					case '2':
 						// Thêm Enemy Oneal
 						_board.addCharacter( new Oneal(Coordinates.tileToPixel(j), Coordinates.tileToPixel(i) + Game.TILES_SIZE, _board));
+						_board.addEntity(j + i * _width, new Grass(j, i, Sprite.grass));
+						break;
+					case '3':
+						// Thêm Enemy Ghosts
+						_board.addCharacter( new Ghost(Coordinates.tileToPixel(j), Coordinates.tileToPixel(i) + Game.TILES_SIZE, _board));
+						_board.addEntity(j + i * _width, new Grass(j, i, Sprite.grass));
+						break;
+					case '4':
+						// Thêm Pontan
+						_board.addCharacter( new Pontan(Coordinates.tileToPixel(j), Coordinates.tileToPixel(i) + Game.TILES_SIZE, _board));
 						_board.addEntity(j + i * _width, new Grass(j, i, Sprite.grass));
 						break;
 					case 'b':

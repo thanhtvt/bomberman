@@ -81,6 +81,39 @@ public class Sprite {
 	| Character
 	|--------------------------------------------------------------------------
 	 */
+	//Ovape
+	public static Sprite ovape_left1 = new Sprite(16, 6, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_left2 = new Sprite(16, 6, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_left3 = new Sprite(16, 6, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ovape_right1 = new Sprite(16, 7, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_right2 = new Sprite(16, 7, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite ovape_right3 = new Sprite(16, 7, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ovape_dead = new Sprite(16, 16, 8, SpriteSheet.tiles, 16, 16);
+
+	//Pontan
+	public static Sprite Pontan_left1 = new Sprite(16, 14, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite Pontan_left2 = new Sprite(16, 14, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite Pontan_left3 = new Sprite(16, 14, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite Pontan_right1 = new Sprite(16, 15, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite Pontan_right2 = new Sprite(16, 15, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite Pontan_right3 = new Sprite(16, 15, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite Pontan_dead = new Sprite(16, 14, 8, SpriteSheet.tiles, 16, 16);
+
+	//RedPontan
+	public static Sprite RedPontan_left1 = new Sprite(16, 12, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite RedPontan_left2 = new Sprite(16, 12, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite RedPontan_left3 = new Sprite(16, 12, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite RedPontan_right1 = new Sprite(16, 13, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite RedPontan_right2 = new Sprite(16, 13, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite RedPontan_right3 = new Sprite(16, 13, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite RedPontan_dead = new Sprite(16, 12, 8, SpriteSheet.tiles, 16, 16);
+
 	//BALLOM
 	public static Sprite balloom_left1 = new Sprite(Title_size, 9, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left2 = new Sprite(Title_size, 9, 1, SpriteSheet.tiles, 16, 16);

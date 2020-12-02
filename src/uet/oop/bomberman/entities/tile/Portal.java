@@ -21,9 +21,9 @@ public class Portal extends Tile {
 			_board.getSoundEffect().stop();
 			SoundEffect stageComplete = new SoundEffect(SoundEffect.STAGE_COMPLETE);
 			stageComplete.play();
-
 			_board.nextLevel();
-
+			if(e.getX() == 16 && e.getY() == 128)  _board.nextLevel();
+			System.out.println(e.getY());
 			return true;
 		}
 		return true;

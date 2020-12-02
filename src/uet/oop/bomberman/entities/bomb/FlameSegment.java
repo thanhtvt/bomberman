@@ -28,15 +28,15 @@ public class FlameSegment extends AnimatedEntitiy {
 
 		updateSprite();
 	}
-	
+
 	@Override
 	public void render(Screen screen) {
 		int xt = (int)_x << 4;
 		int yt = (int)_y << 4;
-		
+
 		screen.renderEntity(xt, yt , this);
 	}
-	
+
 	@Override
 	public void update() {
 		animate();

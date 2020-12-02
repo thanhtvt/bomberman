@@ -102,7 +102,7 @@ public class Flame extends Entity {
 		}
 		return radius;
 	}
-	
+
 	public FlameSegment flameSegmentAt(int x, int y) {
 		for (int i = 0; i < _flameSegments.length; i++) {
 			if(_flameSegments[i].getX() == x && _flameSegments[i].getY() == y)
@@ -117,7 +117,7 @@ public class Flame extends Entity {
 			_flameSegments[i].update();
 		}
 	}
-	
+
 	@Override
 	public void render(Screen screen) {
 		for (int i = 0; i < _flameSegments.length; i++) {

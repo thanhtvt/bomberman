@@ -6,8 +6,7 @@ public class AILow extends AI {
 	@Override
 	public int calculateDirection() {
 		// TODO: cài đặt thuật toán tìm đường đi
-		Random generator = new Random();
-		int value = generator.nextInt(5) + 1;
+		int value = random.nextInt(4) ;
 		return value;
 	}
 

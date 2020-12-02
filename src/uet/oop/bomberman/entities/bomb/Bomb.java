@@ -76,15 +76,15 @@ public class Bomb extends AnimatedEntitiy {
 		}
 	}
 
-    /**
-     * Xử lý Bomb nổ
-     */
+	/**
+	 * Xử lý Bomb nổ
+	 */
 	protected void explode() {
 		_exploded = true;
 
 		SoundEffect explosion = new SoundEffect(SoundEffect.EXPLOSION);
 		explosion.play();
-		
+
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
 		Character c = _board.getCharacterAtExcluding((int)_x, (int)_y, null);
 		if(c != null) {
@@ -111,7 +111,7 @@ public class Bomb extends AnimatedEntitiy {
 
 	@Override
 	public boolean collide(Entity e) {
-        // TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
+		// TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
 		if (e instanceof Bomber && _allowedToPassThru) {
 			int bomberSize = e.getSprite().getSize();
 			boolean bottomLeftCheck = false;
