@@ -49,7 +49,33 @@ public class Sprite {
 	public static Sprite player_dead1 = new Sprite(Title_size, 4, 2, SpriteSheet.tiles, 14, 16);
 	public static Sprite player_dead2 = new Sprite(Title_size, 5, 2, SpriteSheet.tiles, 13, 15);
 	public static Sprite player_dead3 = new Sprite(Title_size, 6, 2, SpriteSheet.tiles, 16, 16);
-	
+
+	/*
+	|--------------------------------------------------------------------------
+	| Bomber 2 for multiplayer
+	|--------------------------------------------------------------------------
+	 */
+	public static Sprite player2_up = new Sprite(16, 4, 3, SpriteSheet.link, 12, 15);
+	public static Sprite player2_down = new Sprite(16, 2, 3, SpriteSheet.link, 13, 16);
+	public static Sprite player2_left = new Sprite(16, 0, 3, SpriteSheet.link, 14, 16);
+	public static Sprite player2_right = new Sprite(16, 7, 3, SpriteSheet.link, 14, 16);
+
+	public static Sprite player2_up_1 = new Sprite(16, 5, 3, SpriteSheet.link, 12, 15);
+	public static Sprite player2_up_2 = player2_up;
+
+	public static Sprite player2_down_1 = new Sprite(16, 3, 3, SpriteSheet.link, 13, 16);
+	public static Sprite player2_down_2 = player2_down;
+
+	public static Sprite player2_left_1 = new Sprite(16, 1, 3, SpriteSheet.link, 13, 15);
+	public static Sprite player2_left_2 = player2_left;
+
+	public static Sprite player2_right_1 = new Sprite(16, 6, 3, SpriteSheet.link, 13, 15);
+	public static Sprite player2_right_2 = player2_right;
+
+	public static Sprite player2_dead1 = new Sprite(16, 0, 4, SpriteSheet.link, 16, 16);
+	public static Sprite player2_dead2 = new Sprite(16, 1, 4, SpriteSheet.link, 16, 16);
+	public static Sprite player2_dead3 = new Sprite(16, 2, 4, SpriteSheet.link, 16, 15);
+
 	/*
 	|--------------------------------------------------------------------------
 	| Character

@@ -3,6 +3,7 @@ package uet.oop.bomberman.level;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
+import uet.oop.bomberman.entities.character.BlueBomber;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
@@ -93,10 +94,15 @@ public class FileLevelLoader extends LevelLoader {
 						break;
 					case 'p':
 						// Thêm Bomber
-						int xBomber = 1, yBomber = 1;
+						int xBomber = j, yBomber = i;
 						_board.addCharacter( new Bomber(Coordinates.tileToPixel(xBomber), Coordinates.tileToPixel(yBomber) + Game.TILES_SIZE, _board) );
-						//Screen.setOffset(0, 0);
 						_board.addEntity(xBomber + yBomber * _width, new Grass(xBomber, yBomber, Sprite.grass));
+						break;
+					case 'l':
+						// Thêm Blue Bomber (Link)
+						int xBlueBomber = j, yBlueBomber = i;
+						_board.addCharacter(new BlueBomber(Coordinates.tileToPixel(xBlueBomber), Coordinates.tileToPixel(yBlueBomber) + Game.TILES_SIZE, _board));
+						_board.addEntity(xBlueBomber + yBlueBomber * _width, new Grass(xBlueBomber, yBlueBomber, Sprite.grass));
 						break;
 					case '1':
 						// Thêm Enemy Balloon
@@ -119,7 +125,7 @@ public class FileLevelLoader extends LevelLoader {
 						);
 						break;
 					case 'f':
-						// Thêm Bomb Item kèm Brick che phủ lên
+						// Thêm Flame Item kèm Brick che phủ lên
 						_board.addEntity(j + i * _width,
 								new LayeredEntity(j, i,
 										new Grass(j, i, Sprite.grass),
@@ -129,11 +135,11 @@ public class FileLevelLoader extends LevelLoader {
 						);
 						break;
 					case 's':
-						// Thêm Bomb Item kèm Brick che phủ lên
+						// Thêm Speed Item kèm Brick che phủ lên
 						_board.addEntity(j + i * _width,
 								new LayeredEntity(j, i,
 										new Grass(j, i, Sprite.grass),
-										new BombItem(j, i, Sprite.powerup_speed),
+										new SpeedItem(j, i, Sprite.powerup_speed),
 										new Brick(j, i, Sprite.brick)
 								)
 						);

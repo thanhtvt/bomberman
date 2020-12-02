@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities.tile.item;
 
-import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
@@ -17,7 +16,7 @@ public class BombItem extends Item {
 		// TODO: xử lý Bomber ăn Item
 		if(e instanceof Bomber) {
 			if(timeOfCollision % 2 == 0) {
-				Game.addBombRate(1);
+				((Bomber) e).addBombRate(1);
 				playSoundEffect();
 				remove();
 			}

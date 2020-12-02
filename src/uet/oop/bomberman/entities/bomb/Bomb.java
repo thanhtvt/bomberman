@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
@@ -16,15 +15,19 @@ public class Bomb extends AnimatedEntitiy {
 	protected double _timeToExplode = 120; //2 seconds
 	public int _timeAfter = 20;
 
+	protected Bomber _owner;
 	protected Board _board;
 	protected Flame[] _flames;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
+	protected int _bombRadius;
 
-	public Bomb(int x, int y, Board board) {
+	public Bomb(int x, int y, Board board, Bomber owner) {
 		_x = x;
 		_y = y;
 		_board = board;
+		_owner = owner;
+		_bombRadius = owner.getBombRadius();
 		_sprite = Sprite.bomb;
 	}
 
@@ -90,7 +93,7 @@ public class Bomb extends AnimatedEntitiy {
 		// TODO: tạo các Flame
 		_flames = new Flame[4];
 		for(int i = 0; i < 4; i++) {
-			_flames[i] = new Flame((int)_x, (int)_y, i, Game.getBombRadius(), _board);
+			_flames[i] = new Flame((int)_x, (int)_y, i, _bombRadius, _board);
 		}
 	}
 
@@ -131,5 +134,9 @@ public class Bomb extends AnimatedEntitiy {
 			return true;
 		}
 		return false;
+	}
+
+	public Bomber getOwner() {
+		return _owner;
 	}
 }

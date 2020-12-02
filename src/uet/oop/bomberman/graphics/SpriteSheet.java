@@ -23,6 +23,7 @@ public class SpriteSheet {
 	}
 	
 	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+	public static SpriteSheet link = new SpriteSheet("/textures/player.png", 959);
 	
 	private void load() {
 		try {

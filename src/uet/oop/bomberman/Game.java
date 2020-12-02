@@ -29,14 +29,14 @@ public class Game extends Canvas {
 	/**
 	 * Số lượng bom có thể đặt.
 	 */
-	private static final int BOMBRATE = 1;
+	public static final int BOMBRATE = 1;
 
 	/**
 	 * Bán kính bom nổ.
 	 */
-	private static final int BOMBRADIUS = 1;
+	public static final int BOMBRADIUS = 1;
 
-	private static final double BOMBERSPEED = 1.0;
+	public static final double BOMBERSPEED = 1.0;
 	
 	public static final int TIME = 200;
 	public static final int POINTS = 0;

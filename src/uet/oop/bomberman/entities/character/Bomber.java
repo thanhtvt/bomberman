@@ -15,8 +15,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Bomber extends Character {
+    protected int _bombRate = Game.BOMBRATE;
+    protected double _bomberSpeed = Game.BOMBERSPEED;
+    protected int _bombRadius = Game.BOMBRADIUS;
 
-    private List<Bomb> _bombs;
+    protected List<Bomb> _bombs;
     protected Keyboard _input;
 
     /**
@@ -70,22 +73,22 @@ public class Bomber extends Character {
     /**
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
-    private void detectPlaceBomb() {
+    protected void detectPlaceBomb() {
         // TODO: kiểm tra xem phím điều khiển đặt bom có được gõ và giá trị _timeBetweenPutBombs, Game.getBombRate() có thỏa mãn hay không
         // TODO:  Game.getBombRate() sẽ trả về số lượng bom có thể đặt liên tiếp tại thời điểm hiện tại
         // TODO: _timeBetweenPutBombs dùng để ngăn chặn Bomber đặt 2 Bomb cùng tại 1 vị trí trong 1 khoảng thời gian quá ngắn
         // TODO: nếu 3 điều kiện trên thỏa mãn thì thực hiện đặt bom bằng placeBomb()
         // TODO: sau khi đặt, nhớ giảm số lượng Bomb Rate và reset _timeBetweenPutBombs về 0
-        if(_input.space && _timeBetweenPutBombs < 0 && Game.getBombRate() > 0 && _board.getBombAt(getXTile(), getYTile()) == null) {
+        if(_input.space && _timeBetweenPutBombs < 0 && this.getBombRate() > 0 && _board.getBombAt(getXTile(), getYTile()) == null) {
             placeBomb(getXTile(), getYTile());
             _timeBetweenPutBombs = 0;
-            Game.addBombRate(-1);
+            this.addBombRate(-1);
         }
     }
 
     protected void placeBomb(int x, int y) {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
-        Bomb bomb = new Bomb(x, y, _board);
+        Bomb bomb = new Bomb(x, y, _board, this);
         _board.addBomb(bomb);
 
         // Play sound effect
@@ -99,9 +102,9 @@ public class Bomber extends Character {
         Bomb b;
         while (bs.hasNext()) {
             b = bs.next();
-            if (b.isRemoved()) {
+            if (b.isRemoved() && this == b.getOwner()) {
                 bs.remove();
-                Game.addBombRate(1);
+                this.addBombRate(1);
             }
         }
     }
@@ -128,7 +131,7 @@ public class Bomber extends Character {
     protected void calculateMove() {
         // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
-        double bomberSpeed = Game.getBomberSpeed();
+        double bomberSpeed = this.getBomberSpeed();
         double x = _x, y = _y;
         if(_input.left) {
             x = _x - 1 * bomberSpeed;
@@ -247,7 +250,7 @@ public class Bomber extends Character {
     /**
      * Làm tròn các tham số x và y khi di chuyển để tránh kẹt ô
      */
-    private void movementRounding() {
+    protected void movementRounding() {
         if (!_moving) {
             int tileX = Coordinates.pixelToTile(_x);
             // Dịch Bomber sang phải
@@ -269,5 +272,29 @@ public class Bomber extends Character {
                 _y = Coordinates.tileToPixel(tileY);
             }
         }
+    }
+
+    public void addBombRate(int i) {
+        _bombRate += i;
+    }
+
+    public int getBombRate() {
+        return _bombRate;
+    }
+
+    public double getBomberSpeed() {
+        return _bomberSpeed;
+    }
+
+    public void addBomberSpeed(double i) {
+        _bomberSpeed += i;
+    }
+
+    public int getBombRadius() {
+        return _bombRadius;
+    }
+
+    public void addBombRadius(int i) {
+        _bombRadius += i;
     }
 }
