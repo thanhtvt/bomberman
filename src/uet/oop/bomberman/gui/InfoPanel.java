@@ -28,7 +28,7 @@ public class InfoPanel extends JPanel {
 		add(pointsLabel);
 		
 		setBackground(Color.black);
-		setPreferredSize(new Dimension(0, 40));
+		setPreferredSize(new Dimension(50, 40));
 	}
 	
 	public void setTime(int t) {

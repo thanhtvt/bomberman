@@ -12,6 +12,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
+import uet.oop.bomberman.sounds.SoundEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,9 +32,11 @@ public class Board implements IRender {
 	public List<Character> _characters = new ArrayList<>();
 	protected List<Bomb> _bombs = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
+	private static SoundEffect backgroundMusic = new SoundEffect(SoundEffect.BACKGROUND_THEME);
+	private static SoundEffect multiMusic = new SoundEffect(SoundEffect.MULTIPLAYER);
 	
-	private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
-	
+	private int _screenToShow = -1; //1:endgame, 2:change level, 3:paused
+
 	private int _time = Game.TIME;
 	private int _points = Game.POINTS;
 	
@@ -42,7 +45,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(1); //start in level 1
+		loadLevel(-1); //start in choosing mode phase
 	}
 	
 	@Override
@@ -73,7 +76,10 @@ public class Board implements IRender {
 		
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
-				_entities[x + y * _levelLoader.getWidth()].render(screen);
+				try {
+					_entities[x + y * _levelLoader.getWidth()].render(screen);
+				}
+				catch(ArrayIndexOutOfBoundsException e) {}
 			}
 		}
 		
@@ -94,7 +100,13 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
-		
+		if(level != 0) {
+			backgroundMusic.loop();
+		}
+		else {
+			multiMusic.loop();
+		}
+
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
@@ -114,6 +126,8 @@ public class Board implements IRender {
 		_screenToShow = 1;
 		_game.resetScreenDelay();
 		_game.pause();
+		backgroundMusic.stop();
+		multiMusic.stop();
 	}
 	
 	public boolean detectNoEnemies() {
@@ -187,7 +201,10 @@ public class Board implements IRender {
 		
 		return null;
 	}
-	
+
+	/**
+	 * Trả về character (không phải a) tại tọa độ x, y.
+	 */
 	public Character getCharacterAtExcluding(int x, int y, Character a) {
 		Iterator<Character> itr = _characters.iterator();
 		
@@ -263,7 +280,7 @@ public class Board implements IRender {
 			
 			g.setFont(new Font("Arial", Font.PLAIN, m.getSize()));
 			g.setColor(m.getColor());
-			g.drawString(m.getMessage(), (int)m.getX() - Screen.xOffset  * Game.SCALE, (int)m.getY());
+			g.drawString(m.getMessage(), (int)m.getX() - (int)(Screen.xOffset  * Game.SCALE), (int)m.getY());
 		}
 	}
 	
@@ -324,6 +341,10 @@ public class Board implements IRender {
 		return _game;
 	}
 
+	public SoundEffect getSoundEffect() {
+		return backgroundMusic;
+	}
+
 	public int getShow() {
 		return _screenToShow;
 	}
@@ -343,13 +364,4 @@ public class Board implements IRender {
 	public void addPoints(int points) {
 		this._points += points;
 	}
-	
-	public int getWidth() {
-		return _levelLoader.getWidth();
-	}
-
-	public int getHeight() {
-		return _levelLoader.getHeight();
-	}
-	
 }

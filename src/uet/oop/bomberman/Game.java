@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
+import uet.oop.bomberman.sounds.SoundEffect;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -16,16 +17,26 @@ import java.awt.image.DataBufferInt;
 public class Game extends Canvas {
 
 	public static final int TILES_SIZE = 16,
-							WIDTH = TILES_SIZE * (31 / 2),
+
+							WIDTH = TILES_SIZE * 31,
+
 							HEIGHT = 13 * TILES_SIZE;
 
-	public static int SCALE = 3;
+	public static double SCALE = 2;
 	
 	public static final String TITLE = "BombermanGame";
-	
-	private static final int BOMBRATE = 1;
-	private static final int BOMBRADIUS = 1;
-	private static final double BOMBERSPEED = 1.0;
+
+	/**
+	 * Số lượng bom có thể đặt.
+	 */
+	public static final int BOMBRATE = 1;
+
+	/**
+	 * Bán kính bom nổ.
+	 */
+	public static final int BOMBRADIUS = 1;
+
+	public static final double BOMBERSPEED = 1.0;
 	
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
@@ -111,7 +122,7 @@ public class Game extends Canvas {
 	public void start() {
 		_running = true;
 		
-		long  lastTime = System.nanoTime();
+		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
 		double delta = 0;

@@ -1,9 +1,9 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.level.LevelLoader;
 
 import java.awt.*;
 
@@ -64,55 +64,46 @@ public class Screen {
 		}
 	}
 	
-	public static void setOffset(int xO, int yO) {
-		xOffset = xO;
-		yOffset = yO;
-	}
-	
-	public static int calculateXOffset(Board board, Bomber bomber) {
-		if(bomber == null) return 0;
-		int temp = xOffset;
-		
-		double BomberX = bomber.getX() / 16;
-		double complement = 0.5;
-		int firstBreakpoint = board.getWidth() / 4;
-		int lastBreakpoint = board.getWidth() - firstBreakpoint;
-		
-		if( BomberX > firstBreakpoint + complement && BomberX < lastBreakpoint - complement) {
-			temp = (int)bomber.getX()  - (Game.WIDTH / 2);
-		}
-		
-		return temp;
-	}
-	
 	public void drawEndGame(Graphics g, int points) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("GAME OVER", getRealWidth(), getRealHeight(), g);
 		
-		font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
+		font = new Font("Arial", Font.PLAIN, (int)(10 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.yellow);
-		drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
+		String subtitle = "POINTS: " + points;
+		if(LevelLoader._level == 0) {
+			subtitle = "PLAYER WINS";
+		}
+		drawCenteredString(subtitle, getRealWidth(), getRealHeight() + (int)((Game.TILES_SIZE * 2) * Game.SCALE), g);
 	}
 
 	public void drawChangeLevel(Graphics g, int level) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
 		
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
-		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
-		
+
+		String title = "LEVEL " + level;
+		if(level == -1) {
+			title = "CHOOSE MODE";
+		}
+		else if(level == 0) {
+			title = "MULTIPLAYER";
+		}
+
+		drawCenteredString(title, getRealWidth(), getRealHeight(), g);
 	}
 	
 	public void drawPaused(Graphics g) {
-		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, (int)(20 * Game.SCALE));
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("PAUSED", getRealWidth(), getRealHeight(), g);
@@ -135,10 +126,10 @@ public class Screen {
 	}
 	
 	public int getRealWidth() {
-		return _width * Game.SCALE;
+		return (int)(_width * Game.SCALE);
 	}
 	
 	public int getRealHeight() {
-		return _height * Game.SCALE;
+		return (int)(_height * Game.SCALE);
 	}
 }

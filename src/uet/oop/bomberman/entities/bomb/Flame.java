@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.graphics.Screen;
 
 public class Flame extends Entity {
@@ -45,6 +46,29 @@ public class Flame extends Entity {
 		boolean last;
 
 		// TODO: tạo các segment dưới đây
+		int dx = 0;
+		int dy = 0;
+		if(_direction == 0) {
+			dy = -1;	// UP
+		}
+		else if(_direction == 1) {
+			dx = 1;		// RIGHT
+		}
+		else if(_direction == 2) {
+			dy = 1;		// DOWN
+		}
+		else {
+			dx = -1;	// LEFT
+		}
+		for(int i = 0; i < calculatePermitedDistance(); i++) {
+			if(i == calculatePermitedDistance() - 1) {
+				last = true;
+			}
+			else {
+				last = false;
+			}
+			_flameSegments[i] = new FlameSegment((int)_x + (i + 1) * dx, (int)_y + (i + 1) * dy, _direction, last);
+		}
 	}
 
 	/**
@@ -53,9 +77,32 @@ public class Flame extends Entity {
 	 */
 	private int calculatePermitedDistance() {
 		// TODO: thực hiện tính toán độ dài của Flame
-		return 1;
+		int radius = 0;
+		int x = (int)_x;
+		int y = (int)_y;
+		while(radius < _radius) {
+			if(_direction == 0) {
+				y--;	// UP
+			}
+			else if(_direction == 1) {
+				x++;	// RIGHT
+			}
+			else if(_direction == 2) {
+				y++;	// DOWN
+			}
+			else {
+				x--;	// LEFT
+			}
+			Entity e = _board.getEntity(x, y, null);
+//			System.out.println(_direction + ": " + e.collide(this));
+			if(!e.collide(this)) {
+				break;
+			}
+			radius++;
+		}
+		return radius;
 	}
-	
+
 	public FlameSegment flameSegmentAt(int x, int y) {
 		for (int i = 0; i < _flameSegments.length; i++) {
 			if(_flameSegments[i].getX() == x && _flameSegments[i].getY() == y)
@@ -65,8 +112,12 @@ public class Flame extends Entity {
 	}
 
 	@Override
-	public void update() {}
-	
+	public void update() {
+		for (int i = 0; i < _flameSegments.length; i++) {
+			_flameSegments[i].update();
+		}
+	}
+
 	@Override
 	public void render(Screen screen) {
 		for (int i = 0; i < _flameSegments.length; i++) {
@@ -77,6 +128,10 @@ public class Flame extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý va chạm với Bomber, Enemy. Chú ý đối tượng này có vị trí chính là vị trí của Bomb đã nổ
-		return true;
+		if(e instanceof Character) {
+			((Character) e).kill();
+			return true;
+		}
+		return false;
 	}
 }

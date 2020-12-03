@@ -13,11 +13,10 @@ public class Frame extends JFrame {
 	public GamePanel _gamepane;
 	private JPanel _containerpane;
 	private InfoPanel _infopanel;
-	
+
 	private Game _game;
 
 	public Frame() {
-		
 		_containerpane = new JPanel(new BorderLayout());
 		_gamepane = new GamePanel(this);
 		_infopanel = new InfoPanel(_gamepane.getGame());
